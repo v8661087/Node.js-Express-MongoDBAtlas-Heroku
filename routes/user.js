@@ -3,7 +3,7 @@ const { check, validationResult} = require("express-validator/check");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const auth = require("../middleware/auth")
+const auth = require("../middleware/auth");
 const User = require("../models/User");
 
 /**
@@ -11,7 +11,7 @@ const User = require("../models/User");
  * @param - /signup
  * @description - User SignUp
  */
-
+/*
 router.post(
     "/signup",
     [
@@ -81,7 +81,7 @@ router.post(
         }
     }
 );
-
+*/
 router.post(
   "/login",
   [

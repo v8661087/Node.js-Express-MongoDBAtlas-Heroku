@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Coupon = require("../models/Coupon");
+const auth = require("../middleware/auth");
 
-//查询数据库所有数据
 router.get("/", async (req, res) => {
   try {
     const fineCoupons = await Coupon.find();
@@ -11,8 +11,8 @@ router.get("/", async (req, res) => {
     res.json({ message: err });
   }
 });
-//添加数据
-router.post("/", async (req, res) => {
+
+router.post("/", auth, async (req, res) => {
   const coupon = new Coupon({
     title: req.body.title,
     code: req.body.code,
@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
     res.json({ message: err });
   }
 });
-//查找对应id的数据
+
 router.get("/:couponId", async (req, res) => {
   try {
     const findCoupon = await Coupon.findById(req.params.couponId);
@@ -36,8 +36,8 @@ router.get("/:couponId", async (req, res) => {
     res.json({ message: err });
   }
 });
-//删除数据
-router.delete("/:couponId", async (req, res) => {
+
+router.delete("/:couponId", auth, async (req, res) => {
   try {
     const removeCoupon = await Coupon.remove({ _id: req.params.couponId });
     res.json(removeCoupon);
@@ -45,8 +45,8 @@ router.delete("/:couponId", async (req, res) => {
     res.json({ message: err });
   }
 });
-//修改数据
-router.patch("/:couponId", async (req, res) => {
+
+router.patch("/:couponId", auth, async (req, res) => {
   try {
     const updateCoupon = await Coupon.updateOne(
       { _id: req.params.couponId },

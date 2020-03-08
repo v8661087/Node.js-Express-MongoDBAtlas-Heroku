@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const Order = require('../models/Order')
+const auth = require("../middleware/auth");
 
-//查询数据库所有数据
 router.get('/', async (req, res) => {
     try {
         const fineOrders = await Order.find()
@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
         res.json({ message: err })
     }
 })
-//添加数据
+
 router.post('/', async (req, res) => {
     const order = new Order({
         id:req.body.id,
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         res.json({ message: err })
     }
 })
-//查找对应id的数据
+
 router.get('/:orderId', async (req, res) => {
     try {
         const findOrder = await Order.findById(req.params.orderId)
@@ -38,8 +38,7 @@ router.get('/:orderId', async (req, res) => {
         res.json({ message: err })
     }
 })
-//删除数据
-router.delete('/:orderId', async (req, res) => {
+router.delete('/:orderId',auth, async (req, res) => {
     try {
         const removeOrder = await Order.remove({ _id: req.params.orderId })
         res.json(removeOrder)
@@ -47,7 +46,7 @@ router.delete('/:orderId', async (req, res) => {
         res.json({ message: err })
     }
 })
-//修改数据
+
 router.patch('/:orderId', async (req, res) => {
     try {
         const updateOrder = await Order.updateOne({ _id: req.params.orderId }, 
