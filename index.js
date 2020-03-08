@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 
 const productRoute = require("./routes/products");
 const orderRoute = require("./routes/orders");
+const couponRoute = require('./routes/coupons');
 
 connectDB();
 const app = express();
@@ -27,3 +28,4 @@ app.use(bodyParser.json());
 
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
+app.use('/coupons',couponRoute)
